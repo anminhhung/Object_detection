@@ -14,7 +14,9 @@ RUN add-apt-repository ppa:deadsnakes/ppa && \
     apt install build-essential -y && \
     apt-get install python3-pip -y && \
     apt update && apt install -y libsm6 libxext6 && \
-    apt-get install -y libxrender-dev
+    apt-get install -y libxrender-dev && \
+    apt install libgl1-mesa-glx -y
+    #ImportError: libGL.so.1: cannot open shared object file: No such file or directory
 
 COPY . /Efficientdet
 

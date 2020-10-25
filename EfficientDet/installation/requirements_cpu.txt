@@ -13,3 +13,4 @@ torch==1.4.0
 torchvision==0.5.0
 gdown
 PyYAML==5.3.1
+easydict==1.9
