@@ -20,6 +20,9 @@ COPY . /Efficientdet
 
 RUN cd Efficientdet && \
     cd installation && \
+    python3 -m pip install -U pip &&\
+    # fix bug can not install skbuild
+    python3 -m pip install -U setuptools &&\
     pip3 install -r requirements_cuda10.1.txt
 
 WORKDIR /Efficientdet
