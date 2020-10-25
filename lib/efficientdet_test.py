@@ -8,12 +8,15 @@ import torch
 from torch.backends import cudnn
 from matplotlib import colors
 
-from backbone import EfficientDetBackbone
+# from backbone import EfficientDetBackbone
+from .backbone import EfficientDetBackbone
 import cv2
 import numpy as np
 
-from efficientdet.utils import BBoxTransform, ClipBoxes
-from utils.utils import preprocess, invert_affine, postprocess, STANDARD_COLORS, standard_to_bgr, get_index_label, plot_one_box
+# from efficientdet.utils import BBoxTransform, ClipBoxes
+from .efficientdet import BBoxTransform, ClipBoxes
+# from utils.utils import preprocess, invert_affine, postprocess, STANDARD_COLORS, standard_to_bgr, get_index_label, plot_one_box
+from .utils import preprocess, invert_affine, postprocess, STANDARD_COLORS, standard_to_bgr, get_index_label, plot_one_box
 
 compound_coef = 0
 force_input_size = None  # set None to use default size

@@ -3,7 +3,7 @@ import torch.nn as nn
 import cv2
 import numpy as np
 
-from efficientdet.utils import BBoxTransform, ClipBoxes
+from lib.efficientdet.utils import BBoxTransform, ClipBoxes
 from utils.utils import postprocess, invert_affine, display
 
 

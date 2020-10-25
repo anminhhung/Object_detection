@@ -9,9 +9,12 @@ import torch
 import cv2
 import numpy as np
 from torch.backends import cudnn
-from backbone import EfficientDetBackbone
-from efficientdet.utils import BBoxTransform, ClipBoxes
-from utils.utils import preprocess, invert_affine, postprocess, preprocess_video
+# from backbone import EfficientDetBackbone
+from .backbone import EfficientDetBackbone
+# from efficientdet.utils import BBoxTransform, ClipBoxes
+from .efficientdet import BBoxTransform, ClipBoxes
+# from utils.utils import preprocess, invert_affine, postprocess, preprocess_video
+from .utils import preprocess, invert_affine, postprocess, preprocess_video
 
 # Video's path
 video_src = 'videotest.mp4'  # set int to use webcam, set str to read from a video file
