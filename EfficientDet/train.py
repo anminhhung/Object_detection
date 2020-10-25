@@ -18,7 +18,7 @@ def train(detector, class_list, root_dir, train_dir, img_train_dir, set_train_di
     detector.set_val_dataset(root_dir, val_dir, img_val_dir, set_val_dir)
 
     # setup model
-    detector.set_model(model_name="efficientdet-d0.pth", num_gpus=num_gpus, freeze_head=freeze_head)
+    detector.set_model(model_name=model_name, num_gpus=num_gpus, freeze_head=freeze_head)
 
     # setup optimizer
     detector.set_hyperparams(optimizer=optimizer, lr=lr, es_min_delta=es_min_delta, es_patience=es_patience)
