@@ -164,8 +164,15 @@ CONFIG:
 
 ---
 
+## Model
+- Link model: [**LINK**](https://drive.google.com/drive/u/0/folders/1CxcGUwtdWYOLbqAEtBbMQ63cEVNzbBjB)
+
+---
+
 ## Run
     python3 train.py
+
+---
 
 ## TODO
 
