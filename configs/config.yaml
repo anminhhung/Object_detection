@@ -1,0 +1,26 @@
+CONFIG:
+    # setup dataset
+    ROOT_DIR: 
+    LABELS_PATH:
+    TRAIN_DIR:
+    IMG_TRAIN_DIR:
+    SET_TRAIN_DIR:
+    VAL_DIR:
+    IMG_VAL_DIR:
+    SET_VAL_DIR:
+    
+    # Avalabel models
+    MODEL_NAME:
+    
+    # hyper params
+    NUM_GPUS:
+    FREEZE_HEAD:
+    OPTIMIZER:
+    LR:
+    ES_MIN_DELTA:
+    ES_PATIENCE:
+    BATCH_SIZE:
+    NUM_WORKERS:
+    NUM_EPOCHS:
+    VAL_INTERVAL:
+    SAVE_INTERVAL:

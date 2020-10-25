@@ -12,3 +12,5 @@ matplotlib
 xmltodict
 torch==1.4.0
 torchvision==0.5.0
+gdown
+pyyaml==5.3.1
