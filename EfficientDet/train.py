@@ -5,6 +5,7 @@ from utils.utils import load_class_names
 from utils.parser import get_config
 
 from lib import Detector
+
 def train(detector, class_list, root_dir, train_dir, img_train_dir, set_train_dir, \
         val_dir, img_val_dir, set_val_dir, model_name, num_gpus, freeze_head, \
         optimizer, lr, es_min_delta, es_patience, batch_size, \
