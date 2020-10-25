@@ -34,7 +34,7 @@ def setup_config(config_path):
 
 if __name__ == '__main__':
     # get config
-    cfg = setup_config('config.yaml')
+    cfg = setup_config('configs/config.yaml')
     root_dir = cfg.CONFIG.ROOT_DIR 
     class_list = load_class_names(cfg.CONFIG.LABELS_PATH)
     train_dir = cfg.CONFIG.TRAIN_DIR 
