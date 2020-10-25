@@ -1,12 +1,10 @@
 ## Project Details
-Pipeline based on Yet-Another-EfficientDet project - https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch  
+Pipeline based on Yet-Another-EfficientDet project - [EfficientDet](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch  )  
+and Monk Object Detection - [Monk_Object_Detection](https://github.com/anminhhung/Monk_Object_Detection).
 
+---
 
-<br />
-<br />
-<br />
-
-# Supported Models
+## Supported Models
   - efficientdet-d0.pth
   - efficientdet-d1.pth
   - efficientdet-d2.pth
@@ -16,8 +14,13 @@ Pipeline based on Yet-Another-EfficientDet project - https://github.com/zylo117/
   - efficientdet-d6.pth
   - efficientdet-d7.pth
 
-<br />
-<br />
+---
+
+## Available optimizers
+  - adamw
+  - sgd
+
+---
 
 ## Installation
 
@@ -25,39 +28,111 @@ Supports
 - Python 3.6
 - Cuda 9.0, 10.0 (Other cuda version support is experimental)
     
-`cd installation`
-
+`cd installation`  
 `cat requirements_cuda9.0.txt | xargs -n 1 -L 1 pip install`
 
-<br />
-<br />
-<br />
+Use Colab:  
+!cd Efficientdet/installation/ && cat requirements_colab.txt | xargs -n 1 -L 1 pip install
 
+---
 
+## Dataset Directory Structure (Format 1)
 
-## Pipeline
+    ../sample_dataset (root_dir)
+          |
+          |------dataset (coco_dir) 
+          |         |
+          |         |----images (img_dir)
+          |                |
+          |                |------Train (set_dir) (Train)
+          |                         |
+          |                         |---------img1.jpg
+          |                         |---------img2.jpg
+          |                         |---------..........(and so on)
+          |                |-------Val (set_dir) (Validation)
+          |                         |
+          |                         |---------img1.jpg
+          |                         |---------img2.jpg
+          |                         |---------..........(and so on)  
+          |
+          |
+          |         |---annotations 
+          |         |----|
+          |              |--------------------instances_Train.json  (instances_<set_dir>.json)
+          |              |--------------------instances_Val.json  (instances_<set_dir>.json)
+          |              |--------------------classes.txt
+          
+          
+ - instances_Train.json -> In proper COCO format
+ - classes.txt          -> A list of classes in alphabetical order
+ 
 
-- Load Dataset
+For TrainSet
+ - root_dir = "../sample_dataset";
+ - coco_dir = "dataset";
+ - img_dir = "images";
+ - set_dir = "Train";
+ 
+For ValSet
+ - root_dir = "..sample_dataset";
+ - coco_dir = "dataset";
+ - img_dir = "images";
+ - set_dir = "Val";
+ 
+ Note: Annotation file name too coincides against the set_dir
 
-`gtf.set_train_dataset(root_dir, coco_dir, img_dir, set_dir, classes_list=["class1", "class2"], batch_size=2, num_workers=3)`
+---
 
-- Load Model
+## Dataset Directory Structure (Format 2)
 
-`gtf.set_model(model_name="efficientdet-d3.pth", num_gpus=1, freeze_head=False);`
+    ../sample_dataset (root_dir)
+          |
+          |------dataset (coco_dir) 
+          |         |
+          |         |---ImagesTrain (set_dir)
+          |         |----|
+          |              |-------------------img1.jpg
+          |              |-------------------img2.jpg
+          |              |-------------------.........(and so on)
+          |
+          |
+          |         |---ImagesVal (set_dir)
+          |         |----|
+          |              |-------------------img1.jpg
+          |              |-------------------img2.jpg
+          |              |-------------------.........(and so on)
+          |
+          |
+          |         |---annotations 
+          |         |----|
+          |              |--------------------instances_ImagesTrain.json  (instances_<set_dir>.json)
+          |              |--------------------instances_ImagesVal.json  (instances_<set_dir>.json)
+          |              |--------------------classes.txt
+          
+          
+ - instances_Train.json -> In proper COCO format
+ - classes.txt          -> A list of classes in alphabetical order
+ 
+ For TrainSet
+ - root_dir = "../sample_dataset";
+ - coco_dir = "dataset";
+ - img_dir = "./";
+ - set_dir = "ImagesTrain";
+ 
+ 
+  For ValSet
+ - root_dir = "../sample_dataset";
+ - coco_dir = "dataset";
+ - img_dir = "./";
+ - set_dir = "ImagesVal";
+ 
+ Note: Annotation file name too coincides against the set_dir
+ 
 
-- Set Hyper Parameters
+---
 
-`gtf.set_hyperparams(optimizer="adamw", lr=0.001, es_min_delta=0.0, es_patience=0)`
-
-- Train
-
-`gtf.train(num_epochs=20, val_interval=1, save_interval=1)`
-
-
-
-<br />
-<br />
-<br />
+## Run
+    python3 train.py
 
 ## TODO
 
