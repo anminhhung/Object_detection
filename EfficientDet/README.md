@@ -116,14 +116,14 @@ For ValSet
  For TrainSet
  - root_dir = "../sample_dataset";
  - coco_dir = "dataset";
- - img_dir = "./";
+ - img_dir = ".";
  - set_dir = "ImagesTrain";
  
  
   For ValSet
  - root_dir = "../sample_dataset";
  - coco_dir = "dataset";
- - img_dir = "./";
+ - img_dir = ".";
  - set_dir = "ImagesVal";
  
  Note: Annotation file name too coincides against the set_dir
