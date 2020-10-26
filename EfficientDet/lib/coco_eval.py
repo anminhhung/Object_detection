@@ -20,11 +20,8 @@ from tqdm import tqdm
 from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
 
-# from backbone import EfficientDetBackbone
 from .backbone import EfficientDetBackbone
-# from efficientdet.utils import BBoxTransform, ClipBoxes
 from .efficientdet import BBoxTransform, ClipBoxes
-# from utils.utils import preprocess, invert_affine, postprocess
 from .utils import preprocess, invert_affine, postprocess
 
 ap = argparse.ArgumentParser()

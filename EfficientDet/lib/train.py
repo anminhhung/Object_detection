@@ -12,19 +12,14 @@ import yaml
 from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import transforms
-# from efficientdet.dataset import CocoDataset, Resizer, Normalizer, Augmenter, collater
 from .efficientdet import CocoDataset, Resizer, Normalizer, Augmenter, collater
-# from backbone import EfficientDetBackbone
 from .backbone import EfficientDetBackbone
 from tensorboardX import SummaryWriter
 import numpy as np
 from tqdm.autonotebook import tqdm
 
-# from efficientdet.loss import FocalLoss
 from .efficientdet import FocalLoss
-# from utils.sync_batchnorm import patch_replication_callback
 from .utils import patch_replication_callback
-# from utils.utils import replace_w_sync_bn, CustomDataParallel, get_last_weights, init_weights
 from .utils import replace_w_sync_bn, CustomDataParallel, get_last_weights, init_weights
 
 

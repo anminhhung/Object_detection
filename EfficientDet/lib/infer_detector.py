@@ -3,14 +3,11 @@ import torch
 from torch.backends import cudnn
 from matplotlib import colors
 
-# from backbone import EfficientDetBackbone
 from .backbone import EfficientDetBackbone
 import cv2
 import numpy as np
 
-# from efficientdet.utils import BBoxTransform, ClipBoxes
 from .efficientdet import BBoxTransform, ClipBoxes
-# from utils.utils import preprocess, invert_affine, postprocess, STANDARD_COLORS, standard_to_bgr, get_index_label, plot_one_box
 from .utils import preprocess, invert_affine, postprocess, STANDARD_COLORS, standard_to_bgr, get_index_label, plot_one_box
 
 
@@ -82,7 +79,12 @@ class Infer():
                                              ratios=self.system_dict["params"]["anchor_ratios"], 
                                              scales=self.system_dict["params"]["anchor_scales"])
         
-        self.system_dict["local"]["model"].load_state_dict(torch.load(self.system_dict["params"]["weights_file"]))
+        # check use gpu
+        if use_gpu:
+            self.system_dict["local"]["model"].load_state_dict(torch.load(self.system_dict["params"]["weights_file"]))
+        else:
+            self.system_dict["local"]["model"].load_state_dict(torch.load(self.system_dict["params"]["weights_file"], map_location=torch.device('cpu')))
+
         self.system_dict["local"]["model"].requires_grad_(False)
         self.system_dict["local"]["model"] = self.system_dict["local"]["model"].eval()
 
@@ -92,7 +94,7 @@ class Infer():
             self.system_dict["local"]["model"] = model.half()
         
         
-    def predict(self, img_path, threshold=0.5):
+    def predict(self, img_path, one_image=True, threshold=0.5, imshow=False, imwrite=True):
         self.system_dict["params"]["threshold"] = threshold;
         ori_imgs, framed_imgs, framed_metas = preprocess(img_path, 
                                                          max_size=self.system_dict["local"]["input_size"])
@@ -116,12 +118,16 @@ class Infer():
                               self.system_dict["params"]["threshold"], self.system_dict["params"]["iou_threshold"])
             
         out = invert_affine(framed_metas, out)
-        scores, labels, bboxes = self.display(out, ori_imgs, imshow=False, imwrite=True)
-        return scores, labels, bboxes;    
+        if one_image:
+            img, scores, labels, bboxes = self.display_image(out, ori_imgs, imshow=imshow, imwrite=imwrite)
+            return img, scores, labels, bboxes
+        else:
+            scores, labels, bboxes  = self.display_images(out, ori_imgs, imshow=imshow, imwrite=imwrite)
+            return scores, labels, bboxes;    
      
     
     
-    def display(self, preds, imgs, imshow=True, imwrite=False):
+    def display_images(self, preds, imgs, imshow=True, imwrite=False):
         scores = [];
         labels = [];
         bboxes = [];
@@ -137,10 +143,10 @@ class Infer():
                     labels.append(obj);
                     bboxes.append([x1, y1, x2, y2]);
                     plot_one_box(imgs[i], 
-                                 [x1, y1, x2, y2], 
-                                 label=obj,
-                                 score=score,
-                                 color=self.system_dict["local"]["color_list"][get_index_label(obj, self.system_dict["params"]["obj_list"])])
+                                    [x1, y1, x2, y2], 
+                                    label=obj,
+                                    score=score,
+                                    color=self.system_dict["local"]["color_list"][get_index_label(obj, self.system_dict["params"]["obj_list"])])
 
 
             if imshow:
@@ -149,31 +155,59 @@ class Infer():
 
             if imwrite:
                 cv2.imwrite('output.jpg', imgs[i])
-                 
-        return scores, labels, bboxes;                    
+                    
+        return scores, labels, bboxes;         
+
+    def display_image(self, preds, imgs, imshow=True, imwrite=False):
+        scores = [];
+        labels = [];
+        bboxes = [];
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        for j in range(len(preds[0]['rois'])):
+            x1, y1, x2, y2 = preds[0]['rois'][j].astype(np.int)
+            obj = self.system_dict["params"]["obj_list"][preds[0]['class_ids'][j]]
+            score = float(preds[0]['scores'][j])
+            if(score > self.system_dict["params"]["threshold"]):
+                scores.append(score);
+                labels.append(obj);
+                bboxes.append([x1, y1, x2, y2]);
+                plot_one_box(imgs[0], 
+                                [x1, y1, x2, y2], 
+                                label=obj,
+                                score=score,
+                                color=self.system_dict["local"]["color_list"][get_index_label(obj, self.system_dict["params"]["obj_list"])])
+
+        if imshow:
+            cv2.imshow('img', imgs)
+            cv2.waitKey(0)
+
+        if imwrite:
+            cv2.imwrite('output.jpg', imgs)
+                
+        return imgs[0], scores, labels, bboxes;            
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
         
         
         
