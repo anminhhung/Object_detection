@@ -74,7 +74,7 @@ train_augmentations = [
 ]
 ```
 
-Modify [here](https://github.com/anminhhung/Object_detection/blob/2dcdce992ff39106536c3037fb3bdb5fec810a74/Detectron/train.py#L93).
+**Modify** [here](https://github.com/anminhhung/Object_detection/blob/2dcdce992ff39106536c3037fb3bdb5fec810a74/Detectron/train.py#L93).
 
 ---
 
