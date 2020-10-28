@@ -53,6 +53,31 @@ Pipeline based on facebookresearch - detectron2: [Detectron2](https://github.com
 
 ---
 
+## Data augmentation method
+Detectron2 has a large list of [available data augmentation methods](https://github.com/facebookresearch/detectron2/tree/master/detectron2/data/transforms).  
+
+- **RandomApply**: This is wrapper around the other aumentation methods so that you can turn a list of them on or off as a group with a specified probability.  
+- **Resize and ResizeShortestEdge**: The are two resize options. If your images vary in shape and you don't want to distort them, *ResizeShortestEdge* is the one to use because it won't change the image's aspect ratio.  
+- **RandomRotation**: This does exactly what it sounds like. You pass it a list of *[min_angle, max_angle]* and it randomly chooses a value. This can be useful for overhead imagery because your object are usually rotation-invariant. If you rotate an image, it will by default preserve all the information in the original image by adding black padding to all the corners. Therefore the actual image size increases, and if you're not-rotated image batch fills up your GPU, rotating the image can cause it to run out of memory. To prevent this, you can do *RandomRotation(45, expand=False). However, this will clip the corners of your original image, so you will lose information.  
+- **RandomContrast, RandomBrightness, and RandomSaturation**: These are all pretty straightforward. You can provide them ranges of the form *(min, max)* where the value 1 is an identity function (no change). These augmentations are very important in cases where different classes might have variation in one of these.  
+
+**Implementation**:  
+```python
+from detectron2.data import transforms as T
+train_augmentations = [
+    T.Resize((200, 200)),
+    T.RandomBrightness(0.5, 1.5),
+    T.RandomContrast(0.5, 1.5),
+    T.RandomSaturation(0.5, 1.5),
+    T.RandomFlip(prob=0.5, horizontal=True, vertical=False),
+    T.RandomFlip(prob=0.5, horizontal=False, vertical=True),
+]
+```
+
+Modify [here](https://github.com/anminhhung/Object_detection/blob/2dcdce992ff39106536c3037fb3bdb5fec810a74/Detectron/train.py#L93).
+
+---
+
 ## Setup hyper params
 ```python
 CONFIG:
