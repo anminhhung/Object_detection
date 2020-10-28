@@ -1,0 +1,8 @@
+DETECTOR:
+    # faster RCNN
+    DETECT_WEIGHT: 
+    DETECT_CONFIG: 
+    THRESHOLD: 
+    NUMBER_CLASS: 
+    CLASSES_PATH: 
+    DEVICE: 
